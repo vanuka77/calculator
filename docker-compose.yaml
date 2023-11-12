@@ -1,0 +1,30 @@
+version: '3'
+services:
+  calculator-backend:
+    container_name: calculator-backend
+    build:
+        context: calculator-backend
+        dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    restart: always
+
+  calculator-db:
+    container_name: calculator-db
+    image: postgres
+    env_file: .env
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  calculator-frontend:
+    container_name: calculator-frontend
+    build:
+      context: calculator-frontend
+      dockerfile: Dockerfile
+    ports:
+      - 5173:5173
+
+volumes:
+  pgdata:
